@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 {
     int nSendBufferSize = 1024;
     int nSendCount= 1000;
-    unsigned short nPort = 0;
+    unsigned short nPort = 5050;
     std::string strServerName;
     int ch;
     while ((ch = getopt(argc, argv, "s:p:n:b:")) != -1)
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
             nSendBufferSize = atoi(optarg);
             break;
         case 'h':
-            printf("Usage: %s -s 10.10.10.10 -p 5050 [-n 1000 -b 1024]\n", argv[0]);
+            printf("Usage: %s -s 10.10.10.10 [-p 5050 -n 1000 -b 1024]\n", argv[0]);
             exit(0);
             break;
         case '?':
