@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 
     if (nPort == 0 || strServerName == "")
     {
-        printf("Usage: %s -s 10.10.10.10 -p 5050\n", argv[0]);
+        printf("Usage: %s -s 10.10.10.10 [-p 5050 -n 1000 -b 1024]\n", argv[0]);
         exit(0);
     }
 
@@ -72,7 +72,11 @@ int main(int argc, char *argv[])
     int i = 0;
     while(i < nSendCount)
     {
-        sendto(sockfd,buf,nSendBufferSize,0,(saddrp)&addr,sizeof(addr));
+        int r = sendto(sockfd,buf,nSendBufferSize,0,(saddrp)&addr,sizeof(addr));
+        if (r < nSendBufferSize)
+        {
+            printf("send failed,r:%d\n",r);
+        }
         i++;
     }
     close(sockfd);
