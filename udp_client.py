@@ -46,16 +46,21 @@ if __name__ == '__main__':
         i = 1
         sendedcount = 0
         lastprinttime = time.time()
+        lastsended = 0
         while True:
             if (time.time()-begintime)*speed > sendedcount:
                 client.sendto(str(i).ljust(1000," "),ip_port)
                 sendedcount = sendedcount+1000
                 i = i + 1 
+                lastsended = lastsended + 1000
             else:
                 if time.time()-lastprinttime>1:
-                    print("time:",time.time(),",sendindex:",i)
+                    #print("time:",time.time(),",sendindex:",i)
+                    print("{}\tsendindex:{}".format(time.asctime( time.localtime(time.time())),i))
                     lastprinttime = time.time()
                 time.sleep(0.001)
+                #print("lastsended:",lastsended)
+                lastsended = 0
     except Exception, err:
         print("error:" + str(i), err)
     client.close()

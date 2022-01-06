@@ -39,15 +39,14 @@ if __name__ == '__main__':
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.bind(("",udp_port)) 
     lastprinttime = time.time()
-    received = 0
+    received = {}
     while True:
          data, addr = s.recvfrom(1024)
-         received = received + 1
+         received[addr] = received.get(addr, 0) + 1
          index = int(data)
-         if received != index :
-            print("error received:",received,",index:",index,",from:",addr,"time:",time.asctime( time.localtime(time.time()) ))
-            received = index
+         if received[addr] != index :
+            print("{}\t error need:{},get:{},from:{}".format( time.asctime( time.localtime(time.time()) ),received[addr],index,addr))
+            received[addr] = index
          elif time.time()-lastprinttime>1 :
-            #print("received:",received,",index:",index,",data:",str(data).strip())
             lastprinttime = time.time()
 
